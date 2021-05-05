@@ -1,0 +1,52 @@
+.home {
+    .home-list {
+        width: 180px;
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        .ant-menu {
+            height: 100%;
+        }
+    }
+    .home-view {
+        transition: all .3s;
+         margin-left: 180px;
+        &.menu-fold {
+            margin-left: 80px;
+        }
+        .header-nav {
+            border-bottom: 1px solid #f8f8f8;
+            position: relative;
+            height: 50px;
+            .nav-item {
+                display: inline-block;
+                padding: 10px;
+            }
+            .nav-right-user {
+                position: absolute;
+                right: 0;
+                top: 0;
+                height: 100%;
+                width: 200px;
+                overflow: hidden;
+                &:hover {
+                    height: auto;
+                    background-color: #f8f8f8;
+                }
+                .item {
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                    transition: all .3s;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #a8f1d5;
+                        color: #0f5f40;
+                    }
+                }
+            }
+            
+        }
+    }
+}
