@@ -66,6 +66,7 @@ export default {
           api.login(this.ruleForm).then(
             (res) => {
               console.log(res);
+              this.$store.dispatch('saveUserInfo', res.data);
               this.$message
                 .success({
                   content: '登录成功，正在跳转首页...',

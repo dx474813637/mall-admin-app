@@ -12,8 +12,8 @@
       </a-breadcrumb>
     </div>
     <ul class="nav-right-user">
-        <li class="item">用户名：dasnjk63<a-icon type="caret-down" /></li>
-        <li class="item">退出</li>
+        <li class="item">用户名：{{$store.state.userInfo.username}}<a-icon type="caret-down" /></li>
+        <li class="item" @click="logout">退出</li>
     </ul>
   </div>
 </template>
@@ -24,6 +24,10 @@ export default {
     toggleCollapsed() {
       this.$store.dispatch('handleChangeMenuCollapsed');
     },
+    logout() {
+      this.$store.dispatch('logout')
+      this.$router.push('/login')
+    }
   },
 };
 </script>
