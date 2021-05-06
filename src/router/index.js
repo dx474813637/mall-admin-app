@@ -21,6 +21,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "reg" */ '../views/layout/Reg.vue'),
   },
   {
+    path: '/forget',
+    name: 'Forget',
+    component: () => import(/* webpackChunkName: "forget" */ '../views/layout/Forget.vue'),
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),

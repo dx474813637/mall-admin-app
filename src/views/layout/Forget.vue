@@ -4,11 +4,13 @@
       <a-form-model-item has-feedback label="Email" prop="email">
         <a-input v-model="ruleForm.email" type="text" />
       </a-form-model-item>
-      <a-form-model-item has-feedback label="username" prop="username">
-        <a-input v-model="ruleForm.username" type="text" />
-      </a-form-model-item>
       <a-form-model-item has-feedback label="Password" prop="password">
-        <a-input v-model="ruleForm.password" type="password" autocomplete="off" />
+        <a-input
+          v-model="ruleForm.password"
+          type="password"
+          autocomplete="off"
+          placeholder="new password"
+        />
       </a-form-model-item>
       <a-form-model-item has-feedback label="Code" prop="code">
         <a-input v-model="ruleForm.code" type="text" />
@@ -21,14 +23,8 @@
           :disabled="getBtnFlag"
         >Get captcha {{ getBtnFlag || getCodeBtnStatus ? `(${btnFlagCount}s)` : "" }}</a-button>
       </a-form-model-item>
-      <a-form-model-item label="Resources" prop="role">
-        <a-radio-group v-model="ruleForm.role">
-          <a-radio value="customer">customer</a-radio>
-          <a-radio value="admin">admin</a-radio>
-        </a-radio-group>
-      </a-form-model-item>
-      <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
-        <a-button type="primary" @click="submitForm('ruleForm')">注册</a-button>
+      <a-form-model-item :wrapper-col="{ span: 20, offset: 4 }">
+        <a-button type="primary" @click="submitForm('ruleForm')">找回密码</a-button>
         <a-button style="margin-left: 10px" @click="resetForm('ruleForm')">重置</a-button>
         <a-button style="margin-left: 10px" @click="goto('/login')">返回登录</a-button>
       </a-form-model-item>
@@ -57,13 +53,6 @@ export default {
         callback();
       }
     };
-    const validateUsername = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('Please input the username'));
-      } else {
-        callback();
-      }
-    };
     const validateCode = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('Please input the code'));
@@ -74,17 +63,14 @@ export default {
     return {
       ruleForm: {
         email: '',
-        username: '',
         password: '',
         code: '',
-        role: 'customer',
       },
       getCodeBtnStatus: false,
       getBtnFlag: false,
       btnFlagCount: 60,
       rules: {
         email: [{ validator: validateEmail, trigger: 'change' }],
-        username: [{ validator: validateUsername, trigger: 'change' }],
         password: [{ validator: validatePass, trigger: 'change' }],
         code: [{ validator: validateCode, trigger: 'change' }],
       },
@@ -139,14 +125,14 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$message.loading({ content: '账户注册中...', key: 'reg' });
-          api.reg(this.ruleForm).then(
+          this.$message.loading({ content: '数据请求中...', key: 'forget' });
+          api.forget(this.ruleForm).then(
             (res) => {
               console.log(res);
               this.$message
                 .success({
-                  content: '注册成功，正在跳转登录...',
-                  key: 'reg',
+                  content: '密码找回成功，正在跳转登录...',
+                  key: 'forget',
                   duration: 2,
                 })
                 .then(() => {
@@ -154,7 +140,7 @@ export default {
                 });
             },
             (err) => {
-              this.$message.error({ content: err, key: 'reg', duration: 2 });
+              this.$message.error({ content: err, key: 'forget', duration: 2 });
             },
           );
           return true;
