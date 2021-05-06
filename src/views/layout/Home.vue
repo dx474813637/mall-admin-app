@@ -3,6 +3,7 @@
     <LeftMenu />
     <div class="home-view" :class="{'menu-fold': $store.state.menuCollapsed}">
       <SliderNav />
+      <router-view></router-view>
     </div>
   </div>
 </template>
