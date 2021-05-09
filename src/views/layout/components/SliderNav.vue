@@ -7,8 +7,8 @@
     </div>
     <div class="nav-item">
       <a-breadcrumb>
-        <a-breadcrumb-item>首页</a-breadcrumb-item>
-        <a-breadcrumb-item><a href="">统计</a></a-breadcrumb-item>
+        <a-breadcrumb-item>{{currentRoutes[0].meta.title}}</a-breadcrumb-item>
+        <a-breadcrumb-item><router-link :to="{name: currentRoutes[1].name}">{{currentRoutes[1].meta.title}}</router-link></a-breadcrumb-item>
       </a-breadcrumb>
     </div>
     <ul class="nav-right-user">
@@ -20,6 +20,16 @@
 
 <script>
 export default {
+  data() {
+    return{
+      currentRoutes: this.$router.currentRoute.matched
+    }
+  },
+  watch: {
+    $route() {
+      this.currentRoutes = this.$router.currentRoute.matched;
+    }
+  },
   methods: {
     toggleCollapsed() {
       this.$store.dispatch('handleChangeMenuCollapsed');

@@ -60,6 +60,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    redirect: "/index",
     meta: { 
       requiresAuth: true,
       title: '首页',

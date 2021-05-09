@@ -74,7 +74,7 @@ export default {
                   duration: 2,
                 })
                 .then(() => {
-                  this.$router.push('/');
+                  this.goto('/index');
                 });
             },
             (err) => {
