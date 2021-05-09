@@ -1,12 +1,13 @@
 <template>
   <div class="home-list">
     <a-menu
-      :default-selected-keys="[$router.currentRoute.matched[1] ? $router.currentRoute.matched[1].name: '']"
-      :default-open-keys="[$router.currentRoute.matched[0].name]"
+      :default-selected-keys="[currentRoutes[1].name]"
+      :default-open-keys="[currentRoutes[0].name]"
       mode="inline"
       theme="dark"
       :inline-collapsed="$store.state.menuCollapsed"
     >
+      <!-- :selectedKeys="selectedKeys" -->
       <a-sub-menu v-for="(item) in $store.state.menuRoutes" :key="item.name">
         <span slot="title"><a-icon :type="item.meta.icon" /><span>{{item.meta.title}}</span></span>
         <template v-if="item.children">
@@ -25,7 +26,25 @@
 
 <script>
 export default {
+  data() {
+    return{
+      currentRoutes: this.$router.currentRoute.matched,
+      selectedKeys: []
+    }
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      handler() {
+        this.currentRoutes = this.$router.currentRoute.matched;
+        this.selectedKeys = [this.currentRoutes[1].name]
+      }
+    }
+  },
   methods: {
+    handle({ item, key, keyPath }) {
+      console.log(key)
+    }
   }
 };
 </script>

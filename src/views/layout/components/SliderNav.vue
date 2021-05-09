@@ -42,4 +42,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped lang="less">
+.header-nav {
+  position: relative;
+  z-index: 200;
+}
+</style>

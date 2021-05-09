@@ -8,8 +8,9 @@
     @change="handleTableChange"
   >
     <template slot="id" slot-scope="id"> {{ id }} </template>
-    <span slot="action">
-      action
+    <span slot="action" slot-scope="item">
+      <a-button type="primary" @click="handleEdit(item)">编辑</a-button>&nbsp;
+      <a-button type="danger" @click="handleDelete(item)">删除</a-button>
     </span>
   </a-table>
 </template>
@@ -19,7 +20,6 @@ const columns = [
     title: "Id",
     dataIndex: "id",
     key: "id",
-    
     scopedSlots: { customRender: "id" }
   },
   {
@@ -76,7 +76,7 @@ const columns = [
   {
     title: "操作",
     key: "action",
-    scopedSlots: { customRender: "action" },
+    scopedSlots: { customRender: 'action'},
     
   }
 ];
@@ -115,6 +115,12 @@ export default {
     handleTableChange(pagination, filters, sorter) {
         this.loading = true
       this.$emit('tableChange', pagination)
+    },
+    handleEdit(item) {
+      this.$emit('editProduct', item)
+    },
+    handleDelete(item) {
+      this.$emit('deleteProduct', item)
     }
   }
 };

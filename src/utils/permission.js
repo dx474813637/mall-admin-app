@@ -9,6 +9,9 @@ const roleToRoutes = {
         {
             name: "ProductAdd"
         },
+        {
+            name: 'ProductEdit'
+        }
     ],
     "admin": [
         {
@@ -21,6 +24,9 @@ const roleToRoutes = {
             name: "ProductAdd"
         },
         {
+            name: 'ProductEdit'
+        },
+        {
             name: "Category"
         },
     ]
@@ -31,7 +37,7 @@ export default function getMenuRoute(role, routes) {
     const menuList = routes.filter(ele => {
         if(!ele.meta.isHide && list.includes(ele.name)) {
             ele.children = ele.children.filter(item => {
-                return list.includes(item.name)
+                return !item.meta.isHide && list.includes(item.name)
             })
             return true
         }
