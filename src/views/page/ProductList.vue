@@ -35,8 +35,12 @@ export default {
     ProductList
   },
   async created() {
-    let res = await api2.category()
-    this.cList = res.data.data
+    if(this.$store.state.category.length == 0) {
+      let res = await api2.category()
+      this.cList = res.data.data
+      this.$store.dispatch('changeCategory', this.cList)
+    }
+    
     this.getData()
   },
   methods: {
@@ -49,7 +53,8 @@ export default {
       api.productsAll({...params, ...this.paramsObj})
       .then(res => {
         this.pList = res.data.data.map(ele => {
-          ele.categoryName = this.cList.filter(item => item.id == ele.category )[0].name
+          ele.categoryName = this.$store.state.category.filter(item => item.id == ele.category )[0].name
+          ele.tags = ele.tags.join(',')
           return ele
         })
         this.pagination = {

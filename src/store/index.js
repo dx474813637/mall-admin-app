@@ -9,6 +9,7 @@ export default new Vuex.Store({
     menuCollapsed: false,
     userInfo: getUserCookie(),
     menuRoutes: [],
+    category: []
   },
   mutations: {
     handleChangeMenuCollapsed(state) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     changeMenuRoutes(state, routes) {
       state.menuRoutes = routes;
     },
+    changeCategory(state, category) {
+      state.category = category;
+    },
   },
   actions: {
     handleChangeMenuCollapsed({ commit }) {
@@ -43,6 +47,9 @@ export default new Vuex.Store({
     },
     changeMenuRoutes({ commit }, routes) {
       commit('changeMenuRoutes', routes);
+    },
+    changeCategory({ commit }, category) {
+      commit('changeCategory', category);
     },
   },
   modules: {}

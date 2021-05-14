@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/layout/Home.vue';
 import store from '@/store'
-import getMenuRoute from '@/utils/permission'
+import {getNewRoute} from '@/utils/permission'
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
@@ -117,9 +117,9 @@ router.beforeEach((to, from, next) => {
   if(to.path != '/login' && to.path != '/reg' && to.path != '/forget') {
     if(store.state.userInfo.username && store.state.userInfo.email && store.state.userInfo.appkey && store.state.userInfo.role ) {
       if (!isAddRoutes) {
-        const menuList = getMenuRoute(store.state.userInfo.role, asyncRouterMap)
+        const menuList = getNewRoute(store.state.userInfo.role, asyncRouterMap)
         store.dispatch('changeMenuRoutes', routes.filter(ele => !ele.meta.isHide).concat(menuList)).then(() => {
-          router.addRoutes(menuList);
+          router.addRoutes(asyncRouterMap);
           next(to.path);
         });
         isAddRoutes = true;

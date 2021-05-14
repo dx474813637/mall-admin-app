@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <LeftMenu :key="key" />
+    <LeftMenu />
     <div class="home-view" :class="{'menu-fold': $store.state.menuCollapsed}">
       <SliderNav />
       <router-view></router-view>
@@ -22,7 +22,7 @@ export default {
   },
   watch: {
     $route() {
-      // this.key = new Date().getTime()
+      this.key = new Date().getTime()
     }
   },
   components: {

@@ -1,14 +1,16 @@
 <template>
   <div class="home-list">
     <a-menu
-      :default-selected-keys="[currentRoutes[1].name]"
-      :default-open-keys="[currentRoutes[0].name]"
       mode="inline"
       theme="dark"
+      :openKeys="openKeys"
+      :selectedKeys="selectedKeys"
       :inline-collapsed="$store.state.menuCollapsed"
     >
-      <!-- :selectedKeys="selectedKeys" -->
-      <a-sub-menu v-for="(item) in $store.state.menuRoutes" :key="item.name">
+      <!-- :selectedKeys="selectedKeys"
+      :default-selected-keys="[currentRoutes[1].name]"
+      :default-open-keys="[currentRoutes[0].name]" -->
+      <a-sub-menu v-for="(item) in $store.state.menuRoutes" :key="item.name" @titleClick="handletitleClick">
         <span slot="title"><a-icon :type="item.meta.icon" /><span>{{item.meta.title}}</span></span>
         <template v-if="item.children">
           <a-menu-item v-for="(ele) in item.children" :key="ele.name">
@@ -29,21 +31,33 @@ export default {
   data() {
     return{
       currentRoutes: this.$router.currentRoute.matched,
-      selectedKeys: []
+      selectedKeys: [],
+      openKeys: [],
+      key: new Date().getTime()
     }
   },
   watch: {
     $route: {
       immediate: true,
-      handler() {
+      handler(to) {
+        this.key = new Date().getTime()
         this.currentRoutes = this.$router.currentRoute.matched;
+        this.openKeys = [this.currentRoutes[0].name] 
         this.selectedKeys = [this.currentRoutes[1].name]
       }
     }
   },
   methods: {
-    handle({ item, key, keyPath }) {
-      console.log(key)
+    handle({ item, key, selectedKeys }) {
+      console.log({ item, key, selectedKeys })
+      console.log(this.selectedKeys)
+    },
+    handleopenChange(openKeys) {
+      console.log(openKeys)
+    },
+    handletitleClick({ key, domEvent }) {
+      console.log({ key, domEvent })
+      this.openKeys.push(key)
     }
   }
 };
